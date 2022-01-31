@@ -4,14 +4,18 @@ import styled from 'styled-components';
 import { useElementSize } from '~hooks/index';
 import type { ProductType } from '~types/index';
 import { calcRoomInfoWidth } from '~utils/index';
+import { ProductList } from '~components/index';
 
 interface RoomInfoProps {
+  onClick: React.MouseEventHandler;
   parentWidth: number;
   imageUrl: string;
   productList: ProductType[],
 }
 
-const RoomInfo = ({ parentWidth, imageUrl, productList }: RoomInfoProps) => {
+const RoomInfo = ({
+  onClick, parentWidth, imageUrl, productList,
+}: RoomInfoProps) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const [width] = useElementSize(imgRef);
 
@@ -24,10 +28,18 @@ const RoomInfo = ({ parentWidth, imageUrl, productList }: RoomInfoProps) => {
         <img src={imageUrl} alt="방 사진" width="100%" ref={imgRef} />
       </ImageContainer>
       <ListContainer>
-        {productList.map(({ productId, productName, imageUrl: url }) => (
-          <React.Fragment key={productId}>
-            <img src={url} alt={`${productName} 이미지`} />
-          </React.Fragment>
+        {productList.map(({
+          productId, productName, imageUrl: url, selected, discountRate,
+        }) => (
+          <ProductList
+            key={productId}
+            onClick={onClick}
+            productId={productId}
+            productName={productName}
+            discountRate={discountRate}
+            imageUrl={url}
+            selected={selected}
+          />
         ))}
       </ListContainer>
     </Container>
