@@ -1,7 +1,18 @@
 const path = require('path');
+const CracoAlias = require('craco-alias');
 
 module.exports = {
   reactScriptsVersion: 'react-scripts' /* (default value) */,
+  plugins: [
+    {
+      plugin: CracoAlias,
+      options: {
+        source: 'tsconfig',
+        baseUrl: './src',
+        tsConfigPath: './tsconfig.path.json',
+      },
+    },
+  ],
   eslint: {
     enable: true /* (default value) */,
     mode: 'extends' /* (default value) */ || 'file',
@@ -12,27 +23,23 @@ module.exports = {
   webpack: {
     // 절대경로 지정
     alias: {
-      '@class': path.resolve(__dirname, 'src/class'),
       '@components': path.resolve(__dirname, 'src/components'),
+      '@constants': path.resolve(__dirname, 'src/constants'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@api': path.resolve(__dirname, 'src/api'),
       '@utils': path.resolve(__dirname, 'src/utils'),
-      '@styles': path.resolve(__dirname, 'src/styles'),
-      '@assets': path.resolve(__dirname, 'src/assets'),
     },
   },
   jest: {
     configure: {
       moduleNameMapper: {
-        '^\\@class/(.*)$': '<rootDir>/src/class/$1',
         '^\\@components/(.*)$': '<rootDir>/src/components/$1',
+        '^\\@constants/(.*)$': '<rootDir>/src/constants/$1',
         '^\\@hooks/(.*)$': '<rootDir>/src/hooks/$1',
         '^\\@pages/(.*)$': '<rootDir>/src/pages/$1',
         '^\\@api/(.*)$': '<rootDir>/src/api/$1',
         '^\\@utils/(.*)$': '<rootDir>/src/utils/$1',
-        '^\\@styles/(.*)$': '<rootDir>/src/styles/$1',
-        '^\\@assets/(.*)$': '<rootDir>/src/assets/$1',
       },
     },
   },
