@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-use-before-define */
 import React, { useRef } from 'react';
 import styled from 'styled-components';
@@ -25,7 +27,7 @@ const RoomInfo = ({
     <Container width={calcRoomInfoWidth(parentWidth)}>
       <ImageContainer>
         {width}
-        <img src={imageUrl} alt="방 사진" width="100%" ref={imgRef} />
+        <img src={imageUrl} alt="방 사진" width="100%" ref={imgRef} onClick={onClick} />
       </ImageContainer>
       <ListContainer>
         {productList.map(({
@@ -60,6 +62,7 @@ const Container = styled.article<ContainerType>`
 `;
 
 const ImageContainer = styled.section`
+  cursor: pointer;
   position: relative;
   top: 0;
   left: 0;

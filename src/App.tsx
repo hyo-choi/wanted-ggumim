@@ -13,27 +13,37 @@ const App = () => {
   const layoutRef = useRef(null);
   const [width] = useElementSize(layoutRef);
 
-  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>): void => {
+  const handleClick = useCallback((e: React.MouseEvent<HTMLElement>): void => {
+    const cancelAllSelection = () => {
+      setState((prev) => ({
+        ...prev,
+        productList: prev.productList.map((product) => ({ ...product, selected: false })),
+      }));
+    };
+
+    const toggleSelection = (itemId: number) => {
+      setState((prev) => ({
+        ...prev,
+        productList: prev.productList.map(
+          (product) => (product.productId === Number(itemId)
+            ? { ...product, selected: true } : { ...product, selected: false }),
+        ),
+      }));
+    };
+
+    if (e.target instanceof HTMLImageElement) {
+      cancelAllSelection();
+      return;
+    }
+
     const item: HTMLDivElement | null = (e.target as HTMLDivElement).closest('.product-list-item');
     if (!item || state.id === -1) return;
 
     const selected: boolean = item.dataset.selected === 'true';
     const itemId: number = Number(item.dataset.itemId);
 
-    if (selected) {
-      setState((prev) => ({
-        ...prev,
-        productList: prev.productList.map((product) => ({ ...product, selected: false })),
-      }));
-      return;
-    }
-    setState((prev) => ({
-      ...prev,
-      productList: prev.productList.map(
-        (product) => (product.productId === Number(itemId)
-          ? { ...product, selected: true } : { ...product, selected: false }),
-      ),
-    }));
+    if (selected) cancelAllSelection();
+    else toggleSelection(itemId);
   }, [state.id]);
 
   useEffect(() => {
