@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchApi } from '@api/index';
+import { fetchApi } from '~api/index';
 
 const App = () => {
   const [state, setState] = useState({});
