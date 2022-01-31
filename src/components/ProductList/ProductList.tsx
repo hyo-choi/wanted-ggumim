@@ -36,7 +36,8 @@ interface ItemType {
   src: string;
 }
 
-const Wrapper = styled.div<WrapperType>`
+const Wrapper = styled.button<WrapperType>`
+  all: unset;
   cursor: pointer;
   display: inline-flex;
   justify-content: center;
