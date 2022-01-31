@@ -1,5 +1,5 @@
 export interface ProductType {
-  productId: string;
+  productId: number;
   productName: string;
   outside: boolean;
   pointX: number;
@@ -8,10 +8,11 @@ export interface ProductType {
   priceDiscount: number;
   discountRate: number;
   imageUrl: string;
+  selected: boolean;
 }
 
 export interface ResponseType {
-  id: string;
+  id: number;
   imageUrl: string;
   productList: ProductType[];
 }

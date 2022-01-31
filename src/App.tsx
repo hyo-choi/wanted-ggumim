@@ -9,7 +9,9 @@ const App = () => {
 
   useEffect(() => {
     const getData = async () => {
-      setState(await fetchApi());
+      const { id, imageUrl, productList }: ResponseType = await fetchApi();
+      const list = productList.map((product) => ({ ...product, selected: false }));
+      setState({ id, imageUrl, productList: list });
     };
     getData();
   }, []);
