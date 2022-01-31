@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-
+import { useElementSize } from '~hooks/index';
 import { MOCK_RESULT } from '~constants/index';
 import RoomInfo from './RoomInfo';
 
@@ -13,6 +13,9 @@ export default {
   },
 } as ComponentMeta<typeof RoomInfo>;
 
-const Template: ComponentStory<typeof RoomInfo> = (args) => <RoomInfo {...args} />;
+export const Primary: ComponentStory<typeof RoomInfo> = (args) => {
+  const divRef = useRef(null);
+  const [width] = useElementSize(divRef);
 
-export const Primary = Template.bind({});
+  return <div ref={divRef}><RoomInfo {...args} parentWidth={width} /></div>;
+};

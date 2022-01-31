@@ -2,16 +2,26 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useElementSize } from '~hooks/index';
-import type { ResponseType } from '~types/api';
+import type { ProductType } from '~types/index';
+import { calcRoomInfoWidth } from '~utils/index';
 
-const RoomInfo = ({ imageUrl, productList }: ResponseType) => {
-  const imgRef = useRef(null);
+interface RoomInfoProps {
+  parentWidth: number;
+  imageUrl: string;
+  productList: ProductType[],
+}
+
+const RoomInfo = ({ parentWidth, imageUrl, productList }: RoomInfoProps) => {
+  const imgRef = useRef<HTMLImageElement>(null);
   const [width] = useElementSize(imgRef);
+
+  // TODO: tooltip이랑 list에 width 넘겨줘서 반응형 만들기
+
   return (
-    <Container>
+    <Container width={calcRoomInfoWidth(parentWidth)}>
       <ImageContainer>
+        {width}
         <img src={imageUrl} alt="방 사진" width="100%" ref={imgRef} />
-        {/* 툴팁 */}
       </ImageContainer>
       <ListContainer>
         {productList.map(({ productId, productName, imageUrl: url }) => (
@@ -24,17 +34,23 @@ const RoomInfo = ({ imageUrl, productList }: ResponseType) => {
   );
 };
 
-const Container = styled.article`      
+interface ContainerType {
+  width: number;
+}
+
+const Container = styled.article<ContainerType>`      
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 100%;
+  width: ${({ width }) => (width)}px;
   overflow: hidden;
 `;
 
 const ImageContainer = styled.section`
   position: relative;
+  top: 0;
+  left: 0;
 `;
 
 const ListContainer = styled.section`

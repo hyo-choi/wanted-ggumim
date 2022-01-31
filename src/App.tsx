@@ -1,11 +1,15 @@
 /* eslint-disable no-use-before-define */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
+import { useElementSize } from '~hooks/index';
 import type { ResponseType } from '~types/index';
 import { fetchApi } from '~api/index';
+import { RoomInfo } from '~components/index';
 
 const App = () => {
   const [state, setState] = useState<ResponseType>();
+  const layoutRef = useRef(null);
+  const [width] = useElementSize(layoutRef);
 
   useEffect(() => {
     const getData = async () => {
@@ -21,15 +25,8 @@ const App = () => {
   }
 
   return (
-    <Layout>
-      <h1>{state.id}</h1>
-      <img src={state.imageUrl} alt="방 이미지" />
-      {state.productList.map(({ productId, productName, imageUrl }) => (
-        <React.Fragment key={productId}>
-          <div>{productName}</div>
-          <img src={imageUrl} alt={`${productName} 이미지`} />
-        </React.Fragment>
-      ))}
+    <Layout ref={layoutRef}>
+      <RoomInfo parentWidth={width} imageUrl={state.imageUrl} productList={state.productList} />
     </Layout>
   );
 };
