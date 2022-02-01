@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { useElementSize } from '~hooks/index';
 import { MOCK_RESULT } from '~constants/index';
+import { useGgumim } from '~hooks/index';
 import RoomInfo from './RoomInfo';
 
 export default {
@@ -9,13 +9,25 @@ export default {
   component: RoomInfo,
   args: {
     imageUrl: MOCK_RESULT.imageUrl,
-    productList: MOCK_RESULT.productList,
   },
 } as ComponentMeta<typeof RoomInfo>;
 
 export const Primary: ComponentStory<typeof RoomInfo> = (args) => {
-  const divRef = useRef(null);
-  const [width] = useElementSize(divRef);
+  const {
+    state,
+    width,
+    layoutRef,
+    handleClick,
+  } = useGgumim();
 
-  return <div ref={divRef}><RoomInfo {...args} parentWidth={width} /></div>;
+  return (
+    <div ref={layoutRef}>
+      <RoomInfo
+        {...args}
+        parentWidth={width}
+        onClick={handleClick}
+        productList={state.productList}
+      />
+    </div>
+  );
 };
