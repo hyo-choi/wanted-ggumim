@@ -31,7 +31,7 @@ const App = () => {
       }));
     };
 
-    if (e.target instanceof HTMLImageElement) {
+    if (e.target instanceof HTMLImageElement && e.target.alt !== '툴팁 버튼') {
       cancelAllSelection();
       return;
     }

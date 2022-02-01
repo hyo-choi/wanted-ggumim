@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useElementSize } from '~hooks/index';
 import type { ProductType } from '~types/index';
 import { calcRoomInfoWidth } from '~utils/index';
-import { ProductList } from '~components/index';
+import { ProductList, ProductTooltip } from '~components/index';
 
 interface RoomInfoProps {
   onClick: React.MouseEventHandler;
@@ -19,15 +19,45 @@ const RoomInfo = ({
   onClick, parentWidth, imageUrl, productList,
 }: RoomInfoProps) => {
   const imgRef = useRef<HTMLImageElement>(null);
-  const [width] = useElementSize(imgRef);
+  const [width, height] = useElementSize(imgRef);
 
   // TODO: tooltip이랑 list에 width 넘겨줘서 반응형 만들기
 
   return (
-    <Container width={calcRoomInfoWidth(parentWidth)}>
+    <Container componentWidth={calcRoomInfoWidth(parentWidth)}>
       <ImageContainer>
-        {width}
         <img src={imageUrl} alt="방 사진" width="100%" ref={imgRef} onClick={onClick} />
+        {productList.map(({
+          productId,
+          productName,
+          outside,
+          pointX,
+          pointY,
+          priceOriginal,
+          priceDiscount,
+          discountRate,
+          imageUrl: url,
+          selected,
+        }) => (
+          <ProductTooltip
+            key={productId}
+            onClick={onClick}
+            parentWidth={width}
+            parentHeight={height}
+            productId={productId}
+            productName={productName}
+            outside={outside}
+            pointX={pointX}
+            pointY={pointY}
+            priceOriginal={priceOriginal}
+            priceDiscount={priceDiscount}
+            discountRate={discountRate}
+            imageUrl={url}
+            selected={selected}
+            originX={imgRef.current?.naturalWidth || 0}
+            originY={imgRef.current?.naturalHeight || 0}
+          />
+        ))}
       </ImageContainer>
       <ListContainer>
         {productList.map(({
@@ -49,15 +79,15 @@ const RoomInfo = ({
 };
 
 interface ContainerType {
-  width: number;
+  componentWidth: number;
 }
 
-const Container = styled.article<ContainerType>`      
+const Container = styled.article<ContainerType>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: ${({ width }) => (width)}px;
+  width: ${({ componentWidth }) => componentWidth}px;
   overflow: hidden;
 `;
 

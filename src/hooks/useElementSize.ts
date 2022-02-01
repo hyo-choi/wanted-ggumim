@@ -1,7 +1,8 @@
 import React, { useLayoutEffect, useState } from 'react';
+import { IMAGE_MAX_SIZE } from '~constants/index';
 
 const useElementSize = (ref: React.RefObject<HTMLElement>) => {
-  const [size, setSize] = useState([0, 0]);
+  const [size, setSize] = useState([IMAGE_MAX_SIZE, 0]);
   useLayoutEffect(() => {
     const updateSize = () => {
       if (!ref || !ref.current) return;
