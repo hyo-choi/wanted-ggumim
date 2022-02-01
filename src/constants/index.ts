@@ -5,4 +5,5 @@ export {
   TOOLTIP_OPEN,
   TOOLTIP_CLOSE,
   TOOLTIP_ARROW,
+  TOOLTIP_GOTO_ARROW,
 } from './image';

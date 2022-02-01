@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable implicit-arrow-linebreak */
 import { IMAGE_MAX_SIZE } from '~constants/index';
 import type { CalcPointsArgsType, CalcPointsReturnType } from '~types/index';
 
@@ -60,3 +60,6 @@ export const calcPoints = ({
     position,
   };
 };
+
+export const addComma = (str: string) =>
+  String(str).replace(/\B(?=(\d{3})+(?!\d))/g, ',');

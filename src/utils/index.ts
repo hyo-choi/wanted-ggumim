@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export { calcRoomInfoWidth, calcPoints } from './calculation';
+export { calcRoomInfoWidth, calcPoints, addComma } from './calculation';

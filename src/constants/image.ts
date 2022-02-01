@@ -12,3 +12,6 @@ export const TOOLTIP_CLOSE =
 
 export const TOOLTIP_ARROW =
   'https://cdn.ggumim.co.kr/storage/20211118152728RO3OXnhkrC.png';
+
+export const TOOLTIP_GOTO_ARROW =
+  'https://cdn.ggumim.co.kr/storage/20211102181936xqHzyWAmb8.png';

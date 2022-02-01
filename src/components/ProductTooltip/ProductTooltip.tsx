@@ -1,9 +1,11 @@
 /* eslint-disable no-use-before-define */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { TOOLTIP_ARROW, TOOLTIP_CLOSE, TOOLTIP_OPEN } from '~constants/index';
+import {
+  TOOLTIP_ARROW, TOOLTIP_CLOSE, TOOLTIP_GOTO_ARROW, TOOLTIP_OPEN,
+} from '~constants/index';
 import type { CalcPointsReturnType, ProductType } from '~types/index';
-import { calcPoints } from '~utils/index';
+import { addComma, calcPoints } from '~utils/index';
 
 interface ProductTooltipType extends ProductType {
   onClick: React.MouseEventHandler;
@@ -24,7 +26,6 @@ const ProductTooltip = ({
   outside,
   pointX,
   pointY,
-  priceOriginal,
   priceDiscount,
   discountRate,
   imageUrl,
@@ -53,7 +54,18 @@ const ProductTooltip = ({
       {selected && (
         <Tooltip href="/" inImagePosition={position}>
           <ProductImage src={imageUrl} />
-          <div>{`${productName} ${outside} ${priceOriginal} ${priceDiscount} ${discountRate}`}</div>
+          <ProductDesc>
+            <div>{productName}</div>
+            <PriceContainer>
+              {outside ? <Price outside>예상가</Price> : (
+                <Price>{`${discountRate}%`}</Price>
+              )}
+              <Price price>{addComma(String(priceDiscount))}</Price>
+            </PriceContainer>
+          </ProductDesc>
+          <ProductArrow>
+            <img src={TOOLTIP_GOTO_ARROW} alt="상품 보기" width="20px" height="20px" />
+          </ProductArrow>
         </Tooltip>
       )}
     </Wrapper>
@@ -67,6 +79,11 @@ interface WrapperType {
 
 interface TooltipType {
   inImagePosition: string[];
+}
+
+interface PriceType {
+  price?: boolean;
+  outside?: boolean;
 }
 
 const Wrapper = styled.button.attrs<WrapperType>(({ pointX, pointY }) => ({
@@ -94,6 +111,7 @@ const Icon = styled.img`
 const Tooltip = styled.a<TooltipType>`
   z-index: 1000;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   position: absolute;
   top: 28px;
@@ -107,6 +125,11 @@ const Tooltip = styled.a<TooltipType>`
   box-shadow: 3px 3px 8px 0 rgb(0 0 0 / 20%);
   font-size: 14px;
   color: #4a4a4a;
+
+  &, &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: inherit;
+  }
 
   &::before {
     content: "";
@@ -131,6 +154,43 @@ const ProductImage = styled.img`
   background-size: cover;
   background-position: center;
   border-radius: 4px;
+`;
+
+const ProductDesc = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  word-break: keep-all;
+  width: 100%;
+  height: 100%
+`;
+
+const ProductArrow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+`;
+
+const PriceContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+`;
+
+const Price = styled.span<PriceType>`
+  font-size: 1.2em !important;
+  font-weight: bold;
+
+  ${({ price, outside }) => {
+    if (price) return '';
+    return `
+      margin-right: 4px;
+      color: ${outside ? '#898f94' : '#ff585d'};
+      font-size: ${outside ? '11px' : '1.2em'} !important;
+    `;
+  }}
 `;
 
 export default ProductTooltip;
