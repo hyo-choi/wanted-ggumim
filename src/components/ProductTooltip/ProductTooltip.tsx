@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import {
   TOOLTIP_ARROW, TOOLTIP_CLOSE, TOOLTIP_GOTO_ARROW, TOOLTIP_OPEN,
 } from '~constants/index';
+import type { PriceType, TooltipType, WrapperType } from '~types/components/ProductTooltip';
 import type { CalcPointsReturnType, ProductType } from '~types/index';
 import { addComma, calcPoints } from '~utils/index';
 
@@ -71,20 +72,6 @@ const ProductTooltip = ({
     </Wrapper>
   );
 };
-
-interface WrapperType {
-  pointX: number;
-  pointY: number;
-}
-
-interface TooltipType {
-  inImagePosition: string[];
-}
-
-interface PriceType {
-  price?: boolean;
-  outside?: boolean;
-}
 
 const Wrapper = styled.button.attrs<WrapperType>(({ pointX, pointY }) => ({
   style: {

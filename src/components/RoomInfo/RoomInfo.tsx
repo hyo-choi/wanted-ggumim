@@ -7,6 +7,7 @@ import { useRoomInfo } from '~hooks/index';
 import type { ProductType } from '~types/index';
 import { calcRoomInfoWidth } from '~utils/index';
 import { ProductList, ProductTooltip } from '~components/index';
+import type { ContainerType } from '~types/components/RoomInfo';
 
 interface RoomInfoProps {
   onClick: React.MouseEventHandler;
@@ -74,10 +75,6 @@ const RoomInfo = ({
     </Container>
   );
 };
-
-interface ContainerType {
-  componentWidth: number;
-}
 
 const Container = styled.article<ContainerType>`
   display: flex;

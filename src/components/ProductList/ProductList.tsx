@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BADGE_IMAGE_URL } from '~constants/index';
+import type { ItemType, WrapperType } from '~types/components/ProductList';
 
 interface ProductListType {
   onClick: React.MouseEventHandler;
@@ -26,15 +27,6 @@ const ProductList = ({
     </ListItem>
   </Wrapper>
 );
-
-interface WrapperType {
-  selected: boolean;
-}
-
-interface ItemType {
-  selected: boolean;
-  src: string;
-}
 
 const Wrapper = styled.button<WrapperType>`
   all: unset;
