@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-use-before-define */
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useElementSize } from '~hooks/index';
+import { useRoomInfo } from '~hooks/index';
 import type { ProductType } from '~types/index';
 import { calcRoomInfoWidth } from '~utils/index';
 import { ProductList, ProductTooltip } from '~components/index';
@@ -18,10 +18,7 @@ interface RoomInfoProps {
 const RoomInfo = ({
   onClick, parentWidth, imageUrl, productList,
 }: RoomInfoProps) => {
-  const imgRef = useRef<HTMLImageElement>(null);
-  const [width, height] = useElementSize(imgRef);
-
-  // TODO: tooltip이랑 list에 width 넘겨줘서 반응형 만들기
+  const { imgRef, width, height } = useRoomInfo();
 
   return (
     <Container componentWidth={calcRoomInfoWidth(parentWidth)}>
