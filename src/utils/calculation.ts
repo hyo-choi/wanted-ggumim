@@ -1,9 +1,10 @@
 /* eslint-disable implicit-arrow-linebreak */
-import { IMAGE_MAX_SIZE } from '~constants/index';
+import { IMAGE_MAX_SIZE, IMAGE_MIN_SIZE } from '~constants/index';
 import type { CalcPointsArgsType, CalcPointsReturnType } from '~types/index';
 
 export const calcRoomInfoWidth = (parentWidth: number): number => {
   if (parentWidth === 0) return IMAGE_MAX_SIZE;
+  if (parentWidth < IMAGE_MIN_SIZE) return IMAGE_MIN_SIZE;
   return IMAGE_MAX_SIZE > parentWidth ? parentWidth : IMAGE_MAX_SIZE;
 };
 

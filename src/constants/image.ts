@@ -1,6 +1,8 @@
 /* eslint-disable operator-linebreak */
 export const IMAGE_MAX_SIZE = 800;
 
+export const IMAGE_MIN_SIZE = 300;
+
 export const BADGE_IMAGE_URL =
   'https://cdn.ggumim.co.kr/storage/20211117191419RW6JS6bjRm.png';
 
