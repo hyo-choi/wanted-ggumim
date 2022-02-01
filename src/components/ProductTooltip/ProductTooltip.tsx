@@ -161,7 +161,6 @@ const ProductDesc = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  word-break: keep-all;
   width: 100%;
   height: 100%
 `;
