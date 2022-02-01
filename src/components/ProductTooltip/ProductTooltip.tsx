@@ -55,7 +55,7 @@ const ProductTooltip = ({
         <Tooltip href="/" inImagePosition={position}>
           <ProductImage src={imageUrl} />
           <ProductDesc>
-            <div>{productName}</div>
+            <ProductName>{productName}</ProductName>
             <PriceContainer>
               {outside ? <Price outside>예상가</Price> : (
                 <Price>{`${discountRate}%`}</Price>
@@ -144,6 +144,11 @@ const Tooltip = styled.a<TooltipType>`
     z-index: 1100;
   }
   ${({ inImagePosition }) => inImagePosition.join(' ')}
+`;
+
+const ProductName = styled.div`
+  text-overflow: ellipsis;
+  line-height: 1.3em;
 `;
 
 const ProductImage = styled.img`
