@@ -27,7 +27,8 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "chromatic": "eval $(grep '^CHROMATIC_TOKEN' .env) && npx chromatic --auto-accept-changes --project-token=$(echo $CHROMATIC_TOKEN)"
   },
   "eslintConfig": {
     "extends": [
@@ -68,6 +69,7 @@
     "@types/styled-components": "^5.1.21",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
+    "chromatic": "^6.4.3",
     "eslint": "^8.8.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
