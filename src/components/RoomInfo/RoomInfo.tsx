@@ -19,7 +19,12 @@ interface RoomInfoProps {
 const RoomInfo = ({
   onClick, parentWidth, imageUrl, productList,
 }: RoomInfoProps) => {
-  const { imgRef, width, height } = useRoomInfo();
+  const {
+    imgRef, listRef, width, height, diffX, isAnimating,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+  } = useRoomInfo();
 
   return (
     <Container componentWidth={calcRoomInfoWidth(parentWidth)}>
@@ -57,20 +62,34 @@ const RoomInfo = ({
           />
         ))}
       </ImageContainer>
-      <ListContainer>
-        {productList.map(({
-          productId, productName, imageUrl: url, selected, discountRate,
-        }) => (
-          <ProductList
-            key={productId}
-            onClick={onClick}
-            productId={productId}
-            productName={productName}
-            discountRate={discountRate}
-            imageUrl={url}
-            selected={selected}
-          />
-        ))}
+      <ListContainer
+        ref={listRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      >
+        <Swiper
+          diffX={diffX}
+          style={{
+            transition: `transform ${isAnimating ? 300 : 0}ms linear`,
+            transform: `translate3d(${-diffX}px, 0, 0)`,
+          }}
+        >
+          {productList.map(({
+            productId, productName, imageUrl: url, selected, discountRate,
+          }) => (
+            <ProductList
+              key={productId}
+              onClick={onClick}
+              productId={productId}
+              productName={productName}
+              discountRate={discountRate}
+              imageUrl={url}
+              selected={selected}
+            />
+          ))}
+        </Swiper>
       </ListContainer>
     </Container>
   );
@@ -97,7 +116,16 @@ const ListContainer = styled.section`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding: 0 10px;
   overflow-x: auto;
+`;
+
+const Swiper = styled.div<{diffX: number}>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: content-box;
 `;
 
 export default RoomInfo;
